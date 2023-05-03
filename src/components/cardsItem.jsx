@@ -24,9 +24,19 @@ const CardsItem = ({item, index, words, setWords, isHiddenWords}) => {
     }, [isHiddenWords])
 
     return (
-        <li className="wordsItem p-2 flex items-center">
-            <span className="id pr-4 text-xl">{index + 1}.</span>
-            <span onClick={handleShow} className="english w-full block bg-blue-200 pl-2 p-1 rounded-l-md text-center">
+        <li className="wordsItem p-2 flex items-center md:block">
+            <div className={"md:flex md:justify-between md:mb-2"}>
+                <span className="id pr-4 text-xl md:text-lg">{index + 1}.</span>
+                <button onClick={_ => handleDelete(item)} className="delete ml-5 hidden md:block">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                         strokeWidth="1.5"
+                         stroke="currentColor" className="w-6 h-6">
+                        <path strokeLinecap="round" strokeLinejoin="round"
+                              d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </button>
+            </div>
+            <span onClick={handleShow} className="english w-full block bg-blue-200 p-1 rounded-l-md text-center md:rounded-tl-md md:rounded-tr-md md:rounded-l-none">
                 {
                     !(!isHiddenWords || isHidden) ?
                         <div className={"flex justify-center items-center" + (!(!isHiddenWords || isHidden) ? " cursor-pointer select-none" : "")}>
@@ -37,10 +47,10 @@ const CardsItem = ({item, index, words, setWords, isHiddenWords}) => {
                         : Object.keys(item)
                 }
             </span>
-            <span className="translate block bg-amber-200 w-full pr-2 p-1 rounded-r-md text-center">
+            <span className="translate block bg-amber-200 w-full p-1 rounded-r-md text-center md:rounded-br-md md:rounded-bl-md md:rounded-r-none">
                 {Object.values(item)}
             </span>
-            <button onClick={_ => handleDelete(item)} className="delete ml-5">
+            <button onClick={_ => handleDelete(item)} className="delete ml-5 md:hidden">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                      strokeWidth="1.5"
                      stroke="currentColor" className="w-6 h-6">
