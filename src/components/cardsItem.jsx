@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
+import setCookie from "../functions/setCookie";
 
-const CardsItem = ({item, index, words, setWords, isHiddenWords}) => {
+const CardsItem = ({item, index, words, setWords, isHiddenWords, isHiddenEngWords}) => {
 
     const [isHidden, setIsHidden] = useState(false)
 
@@ -10,6 +11,7 @@ const CardsItem = ({item, index, words, setWords, isHiddenWords}) => {
 
     const handleDelete = (item) => {
         const index = words.map(item => item).indexOf(item)
+        setCookie("en_words", JSON.stringify([...words.slice(0, index), ...words.slice(index + 1)]))
         setWords(prev => [...prev.slice(0, index), ...prev.slice(index + 1)])
     }
 
@@ -36,10 +38,12 @@ const CardsItem = ({item, index, words, setWords, isHiddenWords}) => {
                     </svg>
                 </button>
             </div>
-            <span onClick={handleShow} className="english w-full block bg-blue-200 p-1 rounded-l-md text-center md:rounded-tl-md md:rounded-tr-md md:rounded-l-none">
+            <span onClick={handleShow}
+                  className="english w-full block bg-blue-200 p-1 rounded-l-md text-center md:rounded-tl-md md:rounded-tr-md md:rounded-l-none">
                 {
-                    !(!isHiddenWords || isHidden) ?
-                        <div className={"flex justify-center items-center" + (!(!isHiddenWords || isHidden) ? " cursor-pointer select-none" : "")}>
+                    !(!isHiddenEngWords || isHidden) ?
+                        <div
+                            className={"flex justify-center items-center" + (!(!isHiddenEngWords || isHidden) ? " cursor-pointer select-none" : "")}>
                             {icon}
                             клик для просмотра
                             {icon}
@@ -47,8 +51,19 @@ const CardsItem = ({item, index, words, setWords, isHiddenWords}) => {
                         : Object.keys(item)
                 }
             </span>
-            <span className="translate block bg-amber-200 w-full p-1 rounded-r-md text-center md:rounded-br-md md:rounded-bl-md md:rounded-r-none">
-                {Object.values(item)}
+            <span onClick={handleShow}
+                  className="translate block bg-amber-200 w-full p-1 rounded-r-md text-center md:rounded-br-md md:rounded-bl-md md:rounded-r-none">
+
+                {
+                    !(!isHiddenWords || isHidden) ?
+                        <div
+                            className={"flex justify-center items-center" + (!(!isHiddenWords || isHidden) ? " cursor-pointer select-none" : "")}>
+                            {icon}
+                            клик для просмотра
+                            {icon}
+                        </div>
+                        : Object.values(item)
+                }
             </span>
             <button onClick={_ => handleDelete(item)} className="delete ml-5 md:hidden">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
